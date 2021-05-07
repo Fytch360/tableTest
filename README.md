@@ -1,3 +1,7 @@
+# Short Note 
+
+After first look at the task I understood that I've got to make recursive function which filling columns and data inside. So that's my solution to this task. I realise that it's probably could be better, but I did my best.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

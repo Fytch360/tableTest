@@ -3,7 +3,7 @@ export const getKeys = (rows) => {
 }
 
 export const getCols = (row) => {
-    return Object.keys(row.data);
+ return  Object.keys(row ? row.data : []);
 }
 
 export const getRecords = (row, child) => {
@@ -11,18 +11,10 @@ export const getRecords = (row, child) => {
 }
 
 
-export const getInheritName = (row) => {
+export const getChildKey = (row) => {
     return Object.keys(row.kids)[0];
 }
 
-export const getRowId = (row) => {
+export const getId = (row) => {
     return Object.values(row)[0];
-}
-
-export const getEntries = (data) => {
-    return Object.entries(data);
-}
-
-export const getValues = (data) => {
-    return Object.values(data);
 }

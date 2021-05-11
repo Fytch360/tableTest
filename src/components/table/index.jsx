@@ -55,7 +55,6 @@ const NestedTable = () => {
   });
   const handleDelete = (id) => {
     setInitialData((prevState) => handleFilterData(prevState, id));
-    console.log(initialData);
   };
 
   const handleFilterData = (data, id) => {

@@ -6,20 +6,8 @@ import data from "../../data/data.json";
 
 const NestedTable = () => {
   const [initialData, setInitialData] = useState(data);
-  const columns = getKeys(initialData).map((item) => {
-    return {
-      key: "data[item]",
-      title: item,
-      render: (record) => {
-        return record.data[item];
-      },
-    };
-  });
-
-  const expandedRowRender = (record) => {
-    const childName = getChildKey(record);
-    const innerDataSource = getRecords(record, childName);
-    const innerColumns = getKeys(innerDataSource).map((item) => {
+  const columns = [
+    ...getKeys(initialData).map((item) => {
       return {
         key: "data[item]",
         title: item,
@@ -27,8 +15,40 @@ const NestedTable = () => {
           return record.data[item];
         },
       };
-    });
-    addDeleteButton(innerColumns, innerDataSource);
+    }),
+    {
+      key: "Delete",
+      title: "Action",
+      width: "10%",
+      render: (record) => (
+        <Button onClick={() => handleDelete(record.data)}>Delete</Button>
+      ),
+    },
+  ];
+
+  const expandedRowRender = (record) => {
+    const childName = getChildKey(record);
+    const innerDataSource = getRecords(record, childName);
+    const innerColumns = [
+      ...getKeys(innerDataSource).map((item) => {
+        return {
+          key: "data[item]",
+          title: item,
+          render: (record) => {
+            return record.data[item];
+          },
+        };
+      }),
+      {
+        key: "Delete",
+        title: "Action",
+        width: "10%",
+        render: (record) => (
+          <Button onClick={() => handleDelete(record.data)}>Delete</Button>
+        ),
+      },
+    ];
+
     return (
       <Table
         titie={childName}
@@ -44,7 +64,7 @@ const NestedTable = () => {
       />
     );
   };
- 
+
   const handleSetData = (data, childName, records) => ({
     data: data,
     kids: {
@@ -55,7 +75,6 @@ const NestedTable = () => {
   });
   const handleDelete = (id) => {
     setInitialData((prevState) => handleFilterData(prevState, id));
-    console.log(initialData);
   };
 
   const handleFilterData = (data, id) => {
@@ -72,19 +91,6 @@ const NestedTable = () => {
           : item;
       });
   };
-
-  const addDeleteButton = (cols) => {  // <--- not best solution, but that is by best so far
-    cols.push({
-      key: "Delete",
-      title: "Action",
-      width: "10%",
-      render: (record) => (
-        <Button onClick={() => handleDelete(record.data)}>Delete</Button>
-      ),
-    });
-  };
-
-  addDeleteButton(columns, initialData);
 
   return (
     <Table
